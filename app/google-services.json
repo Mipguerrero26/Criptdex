@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "43757788588",
+    "project_id": "criptdex-6ebcc",
+    "storage_bucket": "criptdex-6ebcc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43757788588:android:fba948fef6be39d593ee09",
+        "android_client_info": {
+          "package_name": "com.pi.criptdex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "43757788588-0uhosem9i30t5updab6mgab60kto6fju.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_cUTi-DDjdD2oXlZu60auSmU8-CY4UX0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "43757788588-0uhosem9i30t5updab6mgab60kto6fju.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
