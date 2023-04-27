@@ -9,6 +9,8 @@ import com.pi.criptdex.ForumScreen
 import com.pi.criptdex.LibraryScreen
 import com.pi.criptdex.LoginScreen
 import com.pi.criptdex.LoginViewModel
+import com.pi.criptdex.SingUpScreen
+import com.pi.criptdex.SingUpViewModel
 
 import com.pi.criptdex.navigation.Screens.*
 import com.pi.criptdex.UserScreen
@@ -20,6 +22,9 @@ fun NavigationHost(navController: NavHostController){
     ){
         composable(LoginScreen.route){
             LoginScreen(LoginViewModel(), navController)
+        }
+        composable(SingUpScreen.route){
+            SingUpScreen(SingUpViewModel(), navController)
         }
         composable(AppScreen.route){
             AppScreen()

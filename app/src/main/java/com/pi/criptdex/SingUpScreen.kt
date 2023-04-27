@@ -1,7 +1,11 @@
 package com.pi.criptdex
 
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -11,19 +15,20 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
+fun SingUpScreen(viewModel: SingUpViewModel, navController: NavController) {
     Box(
         Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Login(Modifier.align(Alignment.TopCenter), viewModel, navController)
+        SingUp(Modifier.align(Alignment.TopCenter), viewModel, navController)
     }
 }
 
 @Composable
-fun Login(modifier: Modifier, viewModel: LoginViewModel, navController: NavController) {
+fun SingUp(modifier: Modifier, viewModel: SingUpViewModel, navController: NavController) {
 
+    val userName : String by viewModel.userName.observeAsState(initial = "")
     val email : String by viewModel.email.observeAsState(initial = "")
     val password : String by viewModel.password.observeAsState(initial = "")
     val loginEnable:Boolean by viewModel.loginEnable.observeAsState(initial = false)
@@ -37,15 +42,13 @@ fun Login(modifier: Modifier, viewModel: LoginViewModel, navController: NavContr
         Column(modifier = modifier) {
             HeaderImage(Modifier.align(Alignment.CenterHorizontally))
             Spacer(modifier = modifier.padding(14.dp))
-            EmailField(email) { viewModel.onLoginChanged(it, password) }
+            UserNameField(userName) { viewModel.onLoginChanged(it, email, password) }
             Spacer(modifier = Modifier.padding(4.dp))
-            PasswordField(password) {viewModel.onLoginChanged(email, it)}
-            Spacer(modifier = Modifier.padding(8.dp))
-            ForgotPassword(Modifier.align(Alignment.End))
+            EmailField(email) { viewModel.onLoginChanged(userName, it, password) }
+            Spacer(modifier = Modifier.padding(4.dp))
+            PasswordField(password) {viewModel.onLoginChanged(userName, email, it)}
             Spacer(modifier = Modifier.padding(16.dp))
-            LoginButton(email, password, loginEnable, navController)
-            Spacer(modifier = Modifier.padding(8.dp))
-            Registration(Modifier.align(Alignment.CenterHorizontally), navController)
+            SingUpButton(email, password, loginEnable, navController)
         }
     }
 
