@@ -30,10 +30,4 @@ class LoginViewModel: ViewModel(){
 
     private fun isValidEmail(email: String): Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
-    suspend fun onLoginSelected() {
-        _isLoading.value = true
-        delay(4000)
-        _isLoading.value = false
-
-    }
 }
