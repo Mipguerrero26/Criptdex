@@ -8,17 +8,19 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 
-import com.pi.criptdex.Items_menu.*
+import com.pi.criptdex.navigation.Screens.*
+import com.pi.criptdex.navigation.AppNavigationHost
+import com.pi.criptdex.navigation.Screens
 
 @Composable
-fun PantallaPrincipal() {
+fun AppScreen() {
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
 
     val navigation_item = listOf(
-        Pantalla1,
-        Pantalla2,
-        Pantalla3
+        LibraryScreen,
+        ForumScreen,
+        UserScreen
     )
 
     Scaffold (
@@ -38,15 +40,15 @@ fun currentRoute(navController: NavHostController): String? {
 @Composable
 fun NavegacionInferior(
     navController: NavHostController,
-    menu_items : List<Items_menu>
+    menu_items : List<Screens>
 ) {
     BottomAppBar() {
         BottomNavigation() {
             val currentRoute = currentRoute(navController = navController)
             menu_items.forEach { item ->
                 BottomNavigationItem(
-                    selected = currentRoute == item.ruta,
-                    onClick = { navController.navigate(item.ruta) },
+                    selected = currentRoute == item.route,
+                    onClick = { navController.navigate(item.route) },
                     icon = {
                         item.icon?.let { painterResource(id = it) }?.let {
                             Icon(

@@ -8,6 +8,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.pi.criptdex.navigation.NavigationHost
 import com.pi.criptdex.ui.theme.CriptdexTheme
 
 class MainActivity : ComponentActivity() {
