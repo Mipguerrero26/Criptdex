@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import com.pi.criptdex.AppScreen
 import com.pi.criptdex.ForumScreen
 import com.pi.criptdex.LibraryScreen
+import com.pi.criptdex.InfoCryptoScreen
 import com.pi.criptdex.LoginScreen
 import com.pi.criptdex.LoginViewModel
 import com.pi.criptdex.SingUpScreen
@@ -41,7 +42,10 @@ fun AppNavigationHost(navController: NavHostController){
     ){
 
         composable(LibraryScreen.route){
-            LibraryScreen()
+            LibraryScreen(navController)
+        }
+        composable(InfoCryptoScreen.route){
+            InfoCryptoScreen(navController)
         }
         composable(ForumScreen.route){
             ForumScreen()
