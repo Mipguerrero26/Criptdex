@@ -4,17 +4,17 @@ import androidx.navigation.NavHostController
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.pi.criptdex.AppScreen
-import com.pi.criptdex.ForumScreen
-import com.pi.criptdex.LibraryScreen
-import com.pi.criptdex.InfoCryptoScreen
-import com.pi.criptdex.LoginScreen
+import com.pi.criptdex.screens.AppScreen
+import com.pi.criptdex.screens.ForumScreen
+import com.pi.criptdex.screens.LibraryScreen
+import com.pi.criptdex.screens.InfoCryptoScreen
+import com.pi.criptdex.screens.LoginScreen
 import com.pi.criptdex.LoginViewModel
-import com.pi.criptdex.SingUpScreen
+import com.pi.criptdex.screens.SingUpScreen
 import com.pi.criptdex.SingUpViewModel
 
 import com.pi.criptdex.navigation.Screens.*
-import com.pi.criptdex.UserScreen
+import com.pi.criptdex.screens.UserScreen
 
 @Composable
 fun NavigationHost(navController: NavHostController){
@@ -44,14 +44,18 @@ fun AppNavigationHost(navController: NavHostController){
         composable(LibraryScreen.route){
             LibraryScreen(navController)
         }
-        composable(InfoCryptoScreen.route){
-            InfoCryptoScreen(navController)
+        composable(route = "${InfoCryptoScreen.route}/{id}") { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id")
+            if (id != null) {
+                InfoCryptoScreen(navController = navController, id = id)
+            }
         }
         composable(ForumScreen.route){
             ForumScreen()
         }
         composable(UserScreen.route){
-            UserScreen()
+            UserScreen(navController)
         }
+
     }
 }

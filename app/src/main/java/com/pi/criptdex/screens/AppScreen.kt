@@ -1,4 +1,4 @@
-package com.pi.criptdex
+package com.pi.criptdex.screens
 
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable

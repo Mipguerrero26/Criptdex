@@ -1,4 +1,4 @@
-package com.pi.criptdex
+package com.pi.criptdex.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -49,6 +49,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
+import com.pi.criptdex.Crypto
+import com.pi.criptdex.FireStore
+import com.pi.criptdex.R
 import com.pi.criptdex.navigation.Screens
 
 @Composable
@@ -106,7 +109,11 @@ fun LibraryScreen(navController: NavHostController) {
             )
         }
     ) {
-        Column(modifier = Modifier.padding(8.dp)) {
+
+        Column(modifier = Modifier
+            .padding(it)
+            .padding(8.dp)
+        ) {
             val sortedCryptoList = if (isDescendingOrder) cryptoList.sortedBy { it.name } else cryptoList.sortedByDescending { it.name }
             CryptoList(sortedCryptoList, searchQuery, navController)
         }
@@ -163,27 +170,31 @@ fun CryptoList(
 
     LazyColumn(modifier = Modifier.padding(top = 3.dp, bottom = 55.dp)) {
         items(filteredCryptoList) { crypto ->
-            CryptoCard(crypto.image, crypto.name, crypto.symbol, navController)
+            CryptoCard(crypto.image, crypto.name, crypto.symbol, crypto.id, navController)
         }
     }
 }
 
 @Composable
-fun CryptoCard(image: String, name: String, symbol: String, navController: NavHostController) {
+fun CryptoCard(image: String, name: String, symbol: String, id: String, navController: NavHostController) {
     Card(
         modifier = Modifier
             .padding(vertical = 4.dp)
             .fillMaxWidth()
-            .clip(RoundedCornerShape(4.dp)
+            .clip(
+                RoundedCornerShape(4.dp)
             )
     ) {
         Row(modifier = Modifier
             .padding(4.dp)
             .clickable {
-                navController.navigate(route = Screens.InfoCryptoScreen.route)
+                navController.navigate(route = "${Screens.InfoCryptoScreen.route}/$id")
             }
         ) {
-            CryptoImage(image)
+            CryptoImage(image, modifier = Modifier
+                .size(64.dp)
+                .clip(CircleShape)
+                .background(color = Color.White))
             CryptoInfo(
                 name = name,
                 symbol = symbol,
@@ -196,12 +207,9 @@ fun CryptoCard(image: String, name: String, symbol: String, navController: NavHo
 }
 
 @Composable
-fun CryptoImage(image: String) {
+fun CryptoImage(image: String, modifier: Modifier) {
     Box(
-        modifier = Modifier
-            .size(64.dp)
-            .clip(CircleShape)
-            .background(color = Color.White)
+        modifier
     ) {
         AsyncImage(
             model = image,
@@ -216,7 +224,7 @@ fun CryptoImage(image: String) {
 fun CryptoInfo(name: String, symbol: String, modifier: Modifier) {
     Column(
         modifier
-            .padding(start = 16.dp)
+
     ) {
         Text(text = name, fontWeight = FontWeight.Bold)
         Text(text = symbol)

@@ -1,4 +1,4 @@
-package com.pi.criptdex
+package com.pi.criptdex.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -9,6 +9,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.pi.criptdex.EmailField
+import com.pi.criptdex.ForgotPassword
+import com.pi.criptdex.HeaderImage
+import com.pi.criptdex.LoginButton
+import com.pi.criptdex.LoginViewModel
+import com.pi.criptdex.PasswordField
+import com.pi.criptdex.Registration
 
 @Composable
 fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
