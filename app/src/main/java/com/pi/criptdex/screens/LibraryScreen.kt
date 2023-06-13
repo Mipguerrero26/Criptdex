@@ -168,7 +168,7 @@ fun CryptoList(
         crypto.name.contains(searchQuery, ignoreCase = true)
     }
 
-    LazyColumn(modifier = Modifier.padding(top = 3.dp, bottom = 55.dp)) {
+    LazyColumn() {
         items(filteredCryptoList) { crypto ->
             CryptoCard(crypto.image, crypto.name, crypto.symbol, crypto.id, navController)
         }

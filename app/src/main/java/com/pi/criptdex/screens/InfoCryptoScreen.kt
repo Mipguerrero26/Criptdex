@@ -36,8 +36,10 @@ import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.pi.criptdex.ApiService
@@ -72,8 +74,6 @@ fun InfoCryptoScreen(navController: NavHostController, id: String) {
                 apiService.getPrices(id ?: "")
             }
             prices = pricesResponse
-            // Utiliza los datos de crypto y prices obtenidos
-            // ...
         } catch (e: Exception) {
             println("API call failed: ${e.message}")
         }
@@ -103,88 +103,95 @@ fun InfoCryptoScreen(navController: NavHostController, id: String) {
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Center,
-                modifier = Modifier
-                    .padding(3.dp)
-                    .fillMaxWidth()
-            ) {
-                cryptoInfo?.let { crypto ->
-                    // Mostrar la imagen de la criptomoneda
-                    CryptoImage(
-                        crypto.image.large,
-                        modifier = Modifier
-                            .size(90.dp)
-                            .clip(CircleShape)
-                            .background(color = Color.White)
-                    )
-
-                    Spacer(modifier = Modifier.width(16.dp))
-
-                    // Mostrar la información de la criptomoneda
-                    CryptoInfo(
-                        name = crypto.name,
-                        symbol = crypto.symbol,
-                        modifier = Modifier
-                            .padding(start = 16.dp)
-                            .align(Alignment.CenterVertically)
-                    )
-                }
-            }
-
+            CryptoInfoHeader(cryptoInfo)
             Spacer(modifier = Modifier.height(16.dp))
-
-            // Mostrar el gráfico de líneas
-            prices?.prices?.let { priceList ->
-                LineChartView(priceList,
-                    Modifier
-                        .fillMaxWidth()
-                        .height(100.dp))
-            }
-
+            GraphCrypto(prices)
             Spacer(modifier = Modifier.height(16.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.Center
-            ) {
-                cryptoInfo?.let { crypto ->
-                    // Mostrar el precio en euros centrado
-                    Text(
-                        text = "${crypto.market_data.current_price.eur} (EUR)",
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            }
-
+            PriceCrypto(cryptoInfo)
             Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = "Description (English):",
-                fontWeight = FontWeight.Bold
-            )
-
-            cryptoInfo?.let { crypto ->
-                // Mostrar la descripción en un LazyColumn
-                LazyColumn (
-                    modifier = Modifier.padding(top = 3.dp, bottom = 50.dp)
-                        ){
-                    item {
-                        Text(
-                            text = crypto.description.en,
-                            fontStyle = FontStyle.Italic
-                        )
-                    }
-                }
-            }
+            DescriptionCryptoBody(cryptoInfo)
         }
     }
 
 }
 
 @Composable
-fun LineChartView(prices: List<List<Double>>, modifier: Modifier = Modifier) {
+fun CryptoInfoHeader(cryptoInfo: CryptoApi?) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .padding(3.dp)
+            .fillMaxWidth()
+    ) {
+        cryptoInfo?.let { crypto ->
+            CryptoImage(
+                crypto.image.large,
+                modifier = Modifier
+                    .size(90.dp)
+                    .clip(CircleShape)
+                    .width(16.dp)
+                    .background(color = Color.White)
+            )
+
+            CryptoInfo(
+                name = crypto.name,
+                symbol = crypto.symbol,
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .align(Alignment.CenterVertically)
+            )
+        }
+    }
+}
+
+@Composable
+fun GraphCrypto(prices: PricesApi?) {
+    prices?.prices?.let { priceList ->
+        GraphView(priceList, Modifier.fillMaxWidth().height(100.dp))
+    }
+}
+
+@Composable
+fun PriceCrypto(cryptoInfo: CryptoApi?) {
+    cryptoInfo?.let { crypto ->
+        Text(
+            text = "${crypto.market_data.current_price.eur} (EUR)",
+            modifier = Modifier.fillMaxWidth(),
+            style = TextStyle(textAlign = TextAlign.Center),
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+@Composable
+fun DescriptionCryptoBody(cryptoInfo: CryptoApi?) {
+    Text(
+        text = "Description (English):",
+        fontWeight = FontWeight.Bold
+    )
+
+    cryptoInfo?.let { crypto ->
+        DescriptionCrypto(crypto.description.en)
+    }
+}
+
+@Composable
+fun DescriptionCrypto(description: String) {
+    LazyColumn (
+        modifier = Modifier.padding(top = 3.dp, bottom = 50.dp)
+    ){
+        item {
+            Text(
+                text = description,
+                fontStyle = FontStyle.Italic
+            )
+        }
+    }
+}
+
+@Composable
+fun GraphView(prices: List<List<Double>>, modifier: Modifier = Modifier) {
     val minValue = prices.minOf { it[1] }
     val maxValue = prices.maxOf { it[1] }
 

@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                     if (showLoadScreen) {
                         LoadScreen()
                     } else {
-                        NavigationHost(navController = navController)
+                        NavigationHost(context= this, navController = navController)
                     }
                 }
             }

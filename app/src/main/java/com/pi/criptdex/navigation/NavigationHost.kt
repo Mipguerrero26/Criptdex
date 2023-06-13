@@ -10,6 +10,7 @@ import com.pi.criptdex.screens.LibraryScreen
 import com.pi.criptdex.screens.InfoCryptoScreen
 import com.pi.criptdex.screens.LoginScreen
 import com.pi.criptdex.LoginViewModel
+import com.pi.criptdex.MainActivity
 import com.pi.criptdex.screens.SingUpScreen
 import com.pi.criptdex.SingUpViewModel
 
@@ -17,7 +18,7 @@ import com.pi.criptdex.navigation.Screens.*
 import com.pi.criptdex.screens.UserScreen
 
 @Composable
-fun NavigationHost(navController: NavHostController){
+fun NavigationHost(context:MainActivity, navController: NavHostController){
     NavHost(navController = navController,
         startDestination = LoginScreen.route,
     ){
@@ -28,14 +29,14 @@ fun NavigationHost(navController: NavHostController){
             SingUpScreen(SingUpViewModel(), navController)
         }
         composable(AppScreen.route){
-            AppScreen()
+            AppScreen(context)
         }
 
     }
 }
 
 @Composable
-fun AppNavigationHost(navController: NavHostController){
+fun AppNavigationHost(context: MainActivity, navController: NavHostController){
     NavHost(
         navController = navController,
         startDestination = LibraryScreen.route,
@@ -54,7 +55,7 @@ fun AppNavigationHost(navController: NavHostController){
             ForumScreen()
         }
         composable(UserScreen.route){
-            UserScreen(navController)
+            UserScreen(context, navController)
         }
 
     }

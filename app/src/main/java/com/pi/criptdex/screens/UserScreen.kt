@@ -22,51 +22,61 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
+import com.pi.criptdex.MainActivity
 import com.pi.criptdex.R
 
 @Composable
-fun UserScreen(navController: NavController){
+fun UserScreen(context: MainActivity, navController: NavController){
 
     val currentUser = FirebaseAuth.getInstance().currentUser
     val userEmail = currentUser?.email
 
     Column(modifier = Modifier.fillMaxSize()) {
-        Row(
-            modifier = Modifier.padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            Image(
-                painter = painterResource(R.drawable.user),
-                contentDescription = "Imagen de usuario",
-                modifier = Modifier
-                    .size(110.dp)
-                    .padding(end = 8.dp)
-            )
-            Text(
-                text = "$userEmail",
-                fontWeight = FontWeight.Bold,
-                fontSize = 25.sp
-            )
-        }
+        UserInfo(userEmail)
+        SingOffButton(context, navController)
+    }
+}
 
-        Button(
-            onClick = {
-                FirebaseAuth.getInstance().signOut()
-
-            },
+@Composable
+fun UserInfo(userEmail: String?) {
+    Row(
+        modifier = Modifier.padding(16.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
+    ) {
+        Image(
+            painter = painterResource(R.drawable.user),
+            contentDescription = "Imagen de usuario",
             modifier = Modifier
-                .fillMaxWidth()
-                .height(48.dp)
-                .padding(start = 20.dp, end = 20.dp),
-            colors = ButtonDefaults.buttonColors(
-                backgroundColor = Color(0xFF29DAB9),
-                disabledBackgroundColor = Color(0xFF75C4B5),
-                contentColor = Color.White,
-                disabledContentColor = Color.White
-            )
-        ) {
-            Text(text = "Cerrar sesión")
-        }
+                .size(110.dp)
+                .padding(end = 8.dp)
+        )
+        Text(
+            text = "$userEmail",
+            fontWeight = FontWeight.Bold,
+            fontSize = 25.sp
+        )
+    }
+}
+
+@Composable
+fun SingOffButton(context: MainActivity, navController: NavController) {
+    Button(
+        onClick = {
+            FirebaseAuth.getInstance().signOut()
+            context.finish()
+        },
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(48.dp)
+            .padding(start = 20.dp, end = 20.dp),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = Color(0xFF29DAB9),
+            disabledBackgroundColor = Color(0xFF75C4B5),
+            contentColor = Color.White,
+            disabledContentColor = Color.White
+        )
+    ) {
+        Text(text = "Cerrar sesión")
     }
 }
