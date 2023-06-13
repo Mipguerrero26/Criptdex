@@ -11,8 +11,6 @@ import com.pi.criptdex.screens.InfoCryptoScreen
 import com.pi.criptdex.screens.LoginScreen
 import com.pi.criptdex.LoginViewModel
 import com.pi.criptdex.MainActivity
-import com.pi.criptdex.screens.SingUpScreen
-import com.pi.criptdex.SingUpViewModel
 
 import com.pi.criptdex.navigation.Screens.*
 import com.pi.criptdex.screens.UserScreen
@@ -24,9 +22,6 @@ fun NavigationHost(context:MainActivity, navController: NavHostController){
     ){
         composable(LoginScreen.route){
             LoginScreen(LoginViewModel(), navController)
-        }
-        composable(SingUpScreen.route){
-            SingUpScreen(SingUpViewModel(), navController)
         }
         composable(AppScreen.route){
             AppScreen(context)

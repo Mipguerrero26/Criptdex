@@ -4,7 +4,6 @@ import com.pi.criptdex.R
 
 sealed class Screens(val icon: Int?, val title: String?, val route: String){
     object LoginScreen: Screens(null, null, "loginScreen")
-    object SingUpScreen: Screens(null, null, "singUpScreen")
     object AppScreen: Screens(null, null, "appScreen")
     object LibraryScreen: Screens(R.drawable.baseline_list_alt_24, "Biblioteca", "libraryScreen")
     object InfoCryptoScreen: Screens(null, null, "infoCryptoScreen/{id}")

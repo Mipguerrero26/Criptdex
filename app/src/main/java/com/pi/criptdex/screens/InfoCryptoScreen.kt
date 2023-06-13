@@ -45,6 +45,7 @@ import androidx.navigation.NavHostController
 import com.pi.criptdex.ApiService
 import com.pi.criptdex.infoAPI.CryptoApi
 import com.pi.criptdex.infoAPI.PricesApi
+import com.pi.criptdex.ui.theme.Teal500
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
@@ -179,7 +180,7 @@ fun DescriptionCryptoBody(cryptoInfo: CryptoApi?) {
 @Composable
 fun DescriptionCrypto(description: String) {
     LazyColumn (
-        modifier = Modifier.padding(top = 3.dp, bottom = 50.dp)
+        modifier = Modifier.padding(top = 3.dp)
     ){
         item {
             Text(
@@ -204,7 +205,7 @@ fun GraphView(prices: List<List<Double>>, modifier: Modifier = Modifier) {
 
             val path = Path()
             val paint = Paint()
-            paint.color = Color.Blue
+            paint.color = Teal500
             paint.strokeWidth = 5f
             paint.strokeCap = StrokeCap.Round // Establecer los extremos de línea redondeados
 
@@ -226,12 +227,12 @@ fun GraphView(prices: List<List<Double>>, modifier: Modifier = Modifier) {
                     path.cubicTo(midX, prevY.toFloat(), midX, y.toFloat(), x, y.toFloat())
                 }
 
-                //drawCircle(color = Color.Blue, center = Offset(x, y.toFloat()), radius = 5f)
+                //drawCircle(color = Teal500, center = Offset(x, y.toFloat()), radius = 5f)
             }
 
             drawPath(
                 path = path,
-                color = Color.Blue,
+                color = Teal500,
                 alpha = 1f,
                 style = Stroke(width = 5f),
                 colorFilter = null

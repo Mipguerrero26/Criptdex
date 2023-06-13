@@ -71,8 +71,6 @@ fun SingOffButton(context: MainActivity, navController: NavController) {
             .height(48.dp)
             .padding(start = 20.dp, end = 20.dp),
         colors = ButtonDefaults.buttonColors(
-            backgroundColor = Color(0xFF29DAB9),
-            disabledBackgroundColor = Color(0xFF75C4B5),
             contentColor = Color.White,
             disabledContentColor = Color.White
         )

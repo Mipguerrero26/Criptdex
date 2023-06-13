@@ -1,10 +1,11 @@
 package com.pi.criptdex
 
 import android.util.Patterns
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.delay
 
 class LoginViewModel: ViewModel(){
 
@@ -20,6 +21,9 @@ class LoginViewModel: ViewModel(){
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading : LiveData<Boolean> = _isLoading
 
+    private val _showLoginButton = mutableStateOf(true)
+    val showLoginButton: State<Boolean> = _showLoginButton
+
     fun onLoginChanged(email: String, password: String) {
         _email.value = email
         _password.value = password
@@ -29,5 +33,9 @@ class LoginViewModel: ViewModel(){
     private fun isValidPassword(password: String): Boolean = password.length > 6
 
     private fun isValidEmail(email: String): Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
+
+    fun toggleLoginButton() {
+        _showLoginButton.value = !_showLoginButton.value
+    }
 
 }
