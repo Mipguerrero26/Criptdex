@@ -1,4 +1,4 @@
-package com.pi.criptdex
+package com.pi.criptdex.model.api
 
 data class Message(
     val date: Long,

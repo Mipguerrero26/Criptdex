@@ -1,4 +1,4 @@
-package com.pi.criptdex.screens
+package com.pi.criptdex.view.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
@@ -11,10 +11,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.pi.criptdex.MainActivity
-
-import com.pi.criptdex.navigation.Screens.*
-import com.pi.criptdex.navigation.AppNavigationHost
-import com.pi.criptdex.navigation.Screens
+import com.pi.criptdex.view.navigation.Screens.*
+import com.pi.criptdex.view.navigation.AppNavigationHost
+import com.pi.criptdex.view.navigation.Screens
 
 @Composable
 fun AppScreen(context: MainActivity) {
@@ -29,7 +28,7 @@ fun AppScreen(context: MainActivity) {
 
     Scaffold (
         scaffoldState = scaffoldState,
-        bottomBar = {NavegacionInferior(navController, navigation_item)}
+        bottomBar = { NavegacionInferior(navController, navigation_item) }
     ){
         Box(modifier = Modifier.padding(it)) {
             AppNavigationHost(context, navController)

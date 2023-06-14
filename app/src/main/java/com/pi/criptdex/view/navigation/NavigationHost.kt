@@ -1,22 +1,21 @@
-package com.pi.criptdex.navigation
+package com.pi.criptdex.view.navigation
 
 import androidx.navigation.NavHostController
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.pi.criptdex.screens.AppScreen
-import com.pi.criptdex.screens.ForumScreen
-import com.pi.criptdex.screens.LibraryScreen
-import com.pi.criptdex.screens.InfoCryptoScreen
-import com.pi.criptdex.screens.LoginScreen
-import com.pi.criptdex.LoginViewModel
 import com.pi.criptdex.MainActivity
-
-import com.pi.criptdex.navigation.Screens.*
-import com.pi.criptdex.screens.UserScreen
+import com.pi.criptdex.view.screens.AppScreen
+import com.pi.criptdex.view.screens.ForumScreen
+import com.pi.criptdex.view.screens.LibraryScreen
+import com.pi.criptdex.view.screens.InfoCryptoScreen
+import com.pi.criptdex.view.screens.login.LoginScreen
+import com.pi.criptdex.view.screens.login.LoginViewModel
+import com.pi.criptdex.view.navigation.Screens.*
+import com.pi.criptdex.view.screens.UserScreen
 
 @Composable
-fun NavigationHost(context:MainActivity, navController: NavHostController){
+fun NavigationHost(context: MainActivity, navController: NavHostController){
     NavHost(navController = navController,
         startDestination = LoginScreen.route,
     ){
@@ -50,7 +49,7 @@ fun AppNavigationHost(context: MainActivity, navController: NavHostController){
             ForumScreen()
         }
         composable(UserScreen.route){
-            UserScreen(context, navController)
+            UserScreen(context)
         }
 
     }

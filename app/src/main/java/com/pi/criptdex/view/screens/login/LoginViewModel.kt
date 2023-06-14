@@ -1,4 +1,4 @@
-package com.pi.criptdex
+package com.pi.criptdex.view.screens.login
 
 import android.util.Patterns
 import androidx.compose.runtime.State

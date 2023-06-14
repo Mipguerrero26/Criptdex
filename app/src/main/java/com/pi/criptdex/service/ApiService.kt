@@ -1,7 +1,8 @@
-package com.pi.criptdex
+package com.pi.criptdex.service
 
-import com.pi.criptdex.infoAPI.CryptoApi
-import com.pi.criptdex.infoAPI.PricesApi
+import com.pi.criptdex.model.api.Message
+import com.pi.criptdex.model.api.CryptoApi
+import com.pi.criptdex.model.api.pricesapi.PricesApi
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

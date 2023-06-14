@@ -1,4 +1,4 @@
-package com.pi.criptdex.infoAPI
+package com.pi.criptdex.model.api.pricesapi
 
 data class Image(
     val large: String,

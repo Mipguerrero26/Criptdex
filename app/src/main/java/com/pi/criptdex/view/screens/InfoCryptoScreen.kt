@@ -1,4 +1,4 @@
-package com.pi.criptdex.screens
+package com.pi.criptdex.view.screens
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -42,9 +42,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.pi.criptdex.ApiService
-import com.pi.criptdex.infoAPI.CryptoApi
-import com.pi.criptdex.infoAPI.PricesApi
+import com.pi.criptdex.service.ApiService
+import com.pi.criptdex.model.api.CryptoApi
+import com.pi.criptdex.model.api.pricesapi.PricesApi
 import com.pi.criptdex.ui.theme.Teal500
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

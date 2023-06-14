@@ -1,4 +1,4 @@
-package com.pi.criptdex.screens
+package com.pi.criptdex.view.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,8 +31,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.pi.criptdex.ApiService
-import com.pi.criptdex.Message
+import com.pi.criptdex.service.ApiService
+import com.pi.criptdex.model.api.Message
 import kotlinx.coroutines.delay
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -77,42 +77,27 @@ fun ForumScreen() {
             MessageList(messages = messagesState.value, userEmail = userEmail, Modifier.weight(1f))
         }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            TextField(
-                modifier = Modifier.weight(1f),
-                value = messageText.value,
-                onValueChange = { messageText.value = it },
-                label = { Text("Escribe tu mensaje") }
-            )
-
-            IconButton(
-                onClick = {
-                    val message = Message(System.currentTimeMillis(), messageText.value, "$userEmail")
-                    sendMessage(message)
-                    messageText.value = ""
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Send,
-                    contentDescription = "Enviar"
-                )
+        MessageInput(
+            messageText = messageText.value,
+            onMessageTextChanged = { messageText.value = it },
+            onSendMessage = {
+                val message = Message(System.currentTimeMillis(), messageText.value, "$userEmail")
+                sendMessage(message)
+                messageText.value = ""
             }
-        }
+        )
     }
 }
 
 @Composable
 fun MessageList(messages: List<Message>, userEmail: String, modifier: Modifier) {
+    val sortedMessages = messages.sortedByDescending { it.date }
+
     LazyColumn(
         modifier,
         reverseLayout = true
     ) {
-        items(messages) { message ->
+        items(sortedMessages) { message ->
             MessageItem(message = message, userEmail = userEmail)
         }
     }
@@ -160,6 +145,30 @@ fun MessageDate(date: Long) {
         style = TextStyle(textAlign = TextAlign.End, fontWeight = FontWeight.Bold),
         color = MaterialTheme.colors.primary
     )
+}
+
+@Composable
+fun MessageInput(messageText: String, onMessageTextChanged: (String) -> Unit, onSendMessage: () -> Unit
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        TextField(
+            modifier = Modifier.weight(1f),
+            value = messageText,
+            onValueChange = onMessageTextChanged,
+            label = { Text("Escribe tu mensaje") }
+        )
+
+        IconButton(
+            onClick = onSendMessage
+        ) {
+            Icon(
+                imageVector = Icons.Default.Send,
+                contentDescription = "Enviar"
+            )
+        }
+    }
 }
 
 fun sendMessage(message: Message) {

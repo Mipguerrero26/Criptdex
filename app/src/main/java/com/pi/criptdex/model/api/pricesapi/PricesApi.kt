@@ -1,4 +1,4 @@
-package com.pi.criptdex.infoAPI
+package com.pi.criptdex.model.api.pricesapi
 
 data class PricesApi(
     val prices: List<List<Double>>,

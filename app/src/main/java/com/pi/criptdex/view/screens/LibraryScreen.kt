@@ -1,4 +1,4 @@
-package com.pi.criptdex.screens
+package com.pi.criptdex.view.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -49,10 +49,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.pi.criptdex.Crypto
-import com.pi.criptdex.FireStore
+import com.pi.criptdex.model.Crypto
+import com.pi.criptdex.firestore.FireStore
 import com.pi.criptdex.R
-import com.pi.criptdex.navigation.Screens
+import com.pi.criptdex.view.navigation.Screens
 
 @Composable
 fun LibraryScreen(navController: NavHostController) {

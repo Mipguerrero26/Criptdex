@@ -1,4 +1,4 @@
-package com.pi.criptdex.navigation
+package com.pi.criptdex.view.navigation
 
 import com.pi.criptdex.R
 

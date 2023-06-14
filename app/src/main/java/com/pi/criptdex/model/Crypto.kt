@@ -1,4 +1,4 @@
-package com.pi.criptdex
+package com.pi.criptdex.model
 
 data class Crypto(
     val id: String,

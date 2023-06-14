@@ -19,7 +19,7 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
-import com.pi.criptdex.navigation.NavigationHost
+import com.pi.criptdex.view.navigation.NavigationHost
 import com.pi.criptdex.ui.theme.CriptdexTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

@@ -1,8 +1,9 @@
-package com.pi.criptdex
+package com.pi.criptdex.firestore
 
 import androidx.compose.runtime.mutableStateListOf
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
+import com.pi.criptdex.model.Crypto
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext

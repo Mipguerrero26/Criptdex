@@ -1,4 +1,4 @@
-package com.pi.criptdex.screens
+package com.pi.criptdex.view.screens.login
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -26,9 +26,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
-import com.pi.criptdex.LoginViewModel
 import com.pi.criptdex.R
-import com.pi.criptdex.navigation.Screens
+import com.pi.criptdex.view.navigation.Screens
 
 @Composable
 fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
