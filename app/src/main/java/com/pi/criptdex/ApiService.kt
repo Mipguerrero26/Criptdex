@@ -19,4 +19,7 @@ interface ApiService {
         @Query("days") days: Int = 31,
         @Query("interval") interval: String = "daily"
     ): PricesApi
+
+    @GET("forum.json")
+    suspend fun getMessages(): Map<String, Message>
 }

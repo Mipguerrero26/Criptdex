@@ -9,13 +9,19 @@ import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -23,8 +29,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.pi.criptdex.LoginViewModel
 import com.pi.criptdex.R
 import com.pi.criptdex.navigation.Screens
-import com.pi.criptdex.ui.theme.Teal200
-import com.pi.criptdex.ui.theme.Teal500
 
 @Composable
 fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
@@ -88,7 +92,7 @@ fun ChangeMode(modifier: Modifier, viewModel: LoginViewModel, modo: String) {
         modifier = modifier.clickable { viewModel.toggleLoginButton() },
         fontSize = 12.sp,
         fontWeight = FontWeight.Bold,
-        color = Teal500
+        color = MaterialTheme.colors.primary
     )
 }
 
@@ -113,7 +117,7 @@ fun SingUpButton(email: String, password: String, loginEnable: Boolean, navContr
             .fillMaxWidth()
             .height(48.dp),
         colors = ButtonDefaults.buttonColors(
-            disabledBackgroundColor = Teal200,
+            disabledBackgroundColor = MaterialTheme.colors.secondary,
             contentColor = Color.White,
             disabledContentColor = Color.White
         ),
@@ -144,7 +148,7 @@ fun LoginButton(email: String, password: String, loginEnable: Boolean, navContro
             .fillMaxWidth()
             .height(48.dp),
         colors = ButtonDefaults.buttonColors(
-            disabledBackgroundColor = Teal200,
+            disabledBackgroundColor = MaterialTheme.colors.secondary,
             contentColor = Color.White,
             disabledContentColor = Color.White
         ),
@@ -160,19 +164,32 @@ fun ForgotPassword(modifier: Modifier) {
         modifier = modifier.clickable {  },
         fontSize = 12.sp,
         fontWeight = FontWeight.Bold,
-        color = Teal500
+        color = MaterialTheme.colors.primary
     )
 }
 
 @Composable
-fun PasswordField(password:String, onTextFieldChanged:(String) -> Unit) {
+fun PasswordField(password: String, onTextFieldChanged: (String) -> Unit) {
+    var passwordVisibility by remember { mutableStateOf(false) }
+
     TextField(
-        value = password, onValueChange = { onTextFieldChanged(it) },
+        value = password,
+        onValueChange = { onTextFieldChanged(it) },
         modifier = Modifier.fillMaxWidth(),
         placeholder = { Text(text = "Contraseña") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+        visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
         singleLine = true,
         maxLines = 1,
+        trailingIcon = {
+            IconButton(onClick = { passwordVisibility = !passwordVisibility }) {
+                val eyeIcon: Painter = painterResource(R.drawable.baseline_remove_red_eye_24)
+                Icon(
+                    painter = eyeIcon,
+                    contentDescription = if (passwordVisibility) "Ocultar contraseña" else "Mostrar contraseña"
+                )
+            }
+        },
         colors = TextFieldDefaults.textFieldColors(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
@@ -212,6 +229,6 @@ fun HeaderTitle(modifier: Modifier, title: String) {
         modifier,
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
-        color = Teal500
+        color = MaterialTheme.colors.primary
     )
 }

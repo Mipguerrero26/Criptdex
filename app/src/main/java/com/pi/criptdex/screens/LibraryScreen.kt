@@ -226,7 +226,7 @@ fun CryptoInfo(name: String, symbol: String, modifier: Modifier) {
         modifier
 
     ) {
-        Text(text = name, fontWeight = FontWeight.Bold)
+        Text(text = name, fontWeight = FontWeight.Bold, color = MaterialTheme.colors.primary)
         Text(text = symbol)
     }
 }
