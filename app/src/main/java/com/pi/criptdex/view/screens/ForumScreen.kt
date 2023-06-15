@@ -16,6 +16,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.runtime.Composable
@@ -24,13 +25,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import com.pi.criptdex.R
 import com.pi.criptdex.service.ApiService
 import com.pi.criptdex.model.api.Message
 import kotlinx.coroutines.delay
@@ -157,7 +161,11 @@ fun MessageInput(messageText: String, onMessageTextChanged: (String) -> Unit, on
             modifier = Modifier.weight(1f),
             value = messageText,
             onValueChange = onMessageTextChanged,
-            label = { Text("Escribe tu mensaje") }
+            placeholder = { Text(stringResource(R.string.message_text)) },
+            colors = TextFieldDefaults.textFieldColors(
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+            )
         )
 
         IconButton(
@@ -165,7 +173,7 @@ fun MessageInput(messageText: String, onMessageTextChanged: (String) -> Unit, on
         ) {
             Icon(
                 imageVector = Icons.Default.Send,
-                contentDescription = "Enviar"
+                contentDescription = stringResource(R.string.send_text)
             )
         }
     }

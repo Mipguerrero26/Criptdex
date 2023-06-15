@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Criptdex</string>
+    <string name="load_text">Carga</string>
+    <string name="libraryScreen_title">Biblioteca</string>
+    <string name="forumScreen_title">Foro</string>
+    <string name="userScreen_title">Usuario</string>
+    <string name="logo_text">Criptdex logo</string>
+    <string name="login_title">Inicio sesión</string>
+    <string name="email_text">Correo electrónico</string>
+    <string name="password_text">Contraseña</string>
+    <string name="show_password">Mostrar contraseña</string>
+    <string name="hide_password">Ocultar contraseña</string>
+    <string name="forgot_password">¿Olvidate la contraseña?</string>
+    <string name="login_text">Iniciar sesión</string>
+    <string name="login_error">Error, no se ha podido autentificar al usuario</string>
+    <string name="singup_title">Registro</string>
+    <string name="singup_text">Registrarse</string>
+    <string name="singup_error">Error, no se ha podido registrar al usuario</string>
+    <string name="return_text">Volver</string>
+    <string name="search_text">Buscar</string>
+    <string name="filter_text">Filtro</string>
+    <string name="back_text">Atrás</string>
+    <string name="cryptoInfo_title">Info Crypto</string>
+    <string name="description_text">Descripción:</string>
+    <string name="message_text">Mensaje</string>
+    <string name="send_text">Enviar</string>
+    <string name="userImage_text">Imagen de usuario</string>
+    <string name="singof_text">Cerrar sesión</string>
+    <string name="warning_text">¿Estás seguro de que quieres cerrar sesión? Se te cerrará también la aplicación</string>
+    <string name="confirmation_text">Confirmar</string>
+    <string name="cancellation_text">Cancelar</string>
+</resources>

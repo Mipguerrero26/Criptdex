@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -48,7 +49,7 @@ fun UserInfo(userEmail: String?) {
     ) {
         Image(
             painter = painterResource(R.drawable.user),
-            contentDescription = "Imagen de usuario",
+            contentDescription = stringResource(R.string.userImage_text),
             modifier = Modifier
                 .size(110.dp)
                 .padding(end = 8.dp)
@@ -76,7 +77,7 @@ fun SingOffButton(context: MainActivity) {
             disabledContentColor = Color.White
         )
     ) {
-        Text(text = "Cerrar sesión")
+        Text(text = stringResource(R.string.singof_text))
     }
 
     if (showDialog.value) {
@@ -95,20 +96,20 @@ fun ConfirmationDialog(onConfirm: () -> Unit, onCancel: () -> Unit) {
     AlertDialog(
         onDismissRequest = onCancel,
         title = {
-            Text(text = "¿Estás seguro de que quieres cerrar sesión? Se te cerrará también la aplicación")
+            Text(text = stringResource(R.string.warning_text))
         },
         confirmButton = {
             Button(
                 onClick = onConfirm
             ) {
-                Text(text = "Confirmar")
+                Text(text = stringResource(R.string.confirmation_text))
             }
         },
         dismissButton = {
             Button(
                 onClick = onCancel
             ) {
-                Text(text = "Cancelar")
+                Text(text = stringResource(R.string.cancellation_text))
             }
         }
     )

@@ -21,6 +21,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -43,6 +44,7 @@ import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -52,6 +54,7 @@ import coil.compose.AsyncImage
 import com.pi.criptdex.model.Crypto
 import com.pi.criptdex.firestore.FireStore
 import com.pi.criptdex.R
+import com.pi.criptdex.ui.theme.Vanem
 import com.pi.criptdex.view.navigation.Screens
 
 @Composable
@@ -79,7 +82,7 @@ fun LibraryScreen(navController: NavHostController) {
                             onCancelSearch = { isSearching = false }
                         )
                     } else {
-                        Text("Biblioteca")
+                        Text(text = stringResource(R.string.libraryScreen_title), fontFamily = Vanem)
                     }
                 },
                 actions = {
@@ -88,7 +91,7 @@ fun LibraryScreen(navController: NavHostController) {
                     ) {
                         Icon(
                             Icons.Filled.Search,
-                            contentDescription = "Buscar",
+                            contentDescription = stringResource(R.string.search_text),
                             tint = MaterialTheme.colors.onSurface
                         )
                     }
@@ -98,7 +101,7 @@ fun LibraryScreen(navController: NavHostController) {
                         val iconPainter = painterResource(R.drawable.baseline_filter_list_24)
                         Image(
                             painter = iconPainter,
-                            contentDescription = "Orden",
+                            contentDescription = stringResource(R.string.filter_text),
                             modifier = Modifier
                                 .size(24.dp)
                                 .rotate(if (isDescendingOrder) 0f else 180f),
@@ -132,9 +135,13 @@ fun CryptoSearch(
     TextField(
         value = searchQuery,
         onValueChange = onSearchQueryChange,
-        placeholder = { Text(text = "Buscar") },
+        placeholder = { Text(stringResource(R.string.search_text)) },
         singleLine = true,
         maxLines = 1,
+        colors = TextFieldDefaults.textFieldColors(
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent,
+        ),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 2.dp)
@@ -152,7 +159,10 @@ fun CryptoSearch(
                 onSearchQueryChange("") // Limpiar el texto cuando se hace clic en "Atrás"
                 onCancelSearch()
             }) {
-                Icon(Icons.Filled.ArrowBack, contentDescription = "Atrás")
+                Icon(
+                    Icons.Filled.ArrowBack,
+                    contentDescription = stringResource(R.string.back_text)
+                )
             }
         }
     )
@@ -188,7 +198,7 @@ fun CryptoCard(image: String, name: String, symbol: String, id: String, navContr
         Row(modifier = Modifier
             .padding(4.dp)
             .clickable {
-                navController.navigate(route = "${Screens.InfoCryptoScreen.route}/$id")
+                navController.navigate(route = "${Screens.CryptoInfoScreen.route}/$id")
             }
         ) {
             CryptoImage(image, modifier = Modifier
@@ -226,7 +236,12 @@ fun CryptoInfo(name: String, symbol: String, modifier: Modifier) {
         modifier
 
     ) {
-        Text(text = name, fontWeight = FontWeight.Bold, color = MaterialTheme.colors.primary)
+        Text(
+            text = name,
+            fontFamily = Vanem,
+            fontWeight = FontWeight.Bold,
+            color = MaterialTheme.colors.primary
+        )
         Text(text = symbol)
     }
 }

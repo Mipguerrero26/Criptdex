@@ -7,10 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.pi.criptdex.MainActivity
+import com.pi.criptdex.ui.theme.Vanem
 import com.pi.criptdex.view.navigation.Screens.*
 import com.pi.criptdex.view.navigation.AppNavigationHost
 import com.pi.criptdex.view.navigation.Screens
@@ -59,11 +61,18 @@ fun NavegacionInferior(
                         item.icon?.let { painterResource(id = it) }?.let {
                             Icon(
                                 painter = it,
-                                contentDescription = item.title
+                                contentDescription = item.title?.let { stringResource(it) } ?: ""
                             )
                         }
                     },
-                    label= { item.title?.let { Text(it) } }
+                    label = {
+                        item.title?.let { stringResource(it) }?.let {
+                            Text(
+                                text = it,
+                                fontFamily = Vanem
+                            )
+                        }
+                    }
                 )
             }
         }

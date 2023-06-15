@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
@@ -36,23 +37,26 @@ import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.pi.criptdex.R
 import com.pi.criptdex.service.ApiService
 import com.pi.criptdex.model.api.CryptoApi
 import com.pi.criptdex.model.api.pricesapi.PricesApi
 import com.pi.criptdex.ui.theme.Teal500
+import com.pi.criptdex.ui.theme.Vanem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 @Composable
-fun InfoCryptoScreen(navController: NavHostController, id: String) {
+fun CryptoInfoScreen(navController: NavHostController, id: String) {
 
     val retrofit = Retrofit.Builder()
         .baseUrl("https://api.coingecko.com/api/v3/")
@@ -84,12 +88,12 @@ fun InfoCryptoScreen(navController: NavHostController, id: String) {
         topBar = {
             TopAppBar(
                 title = {
-                    Text("Info crypto")
+                    Text(text = stringResource(R.string.cryptoInfo_title), fontFamily = Vanem)
                 },
                 navigationIcon = {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "Atrás",
+                        contentDescription = stringResource(R.string.return_text),
                         modifier = Modifier.clickable {
                             navController.popBackStack()
                         }
@@ -168,8 +172,10 @@ fun PriceCrypto(cryptoInfo: CryptoApi?) {
 @Composable
 fun DescriptionCryptoBody(cryptoInfo: CryptoApi?) {
     Text(
-        text = "Description (English):",
-        fontWeight = FontWeight.Bold
+        text = stringResource(R.string.description_text),
+        fontFamily = Vanem,
+        fontWeight = FontWeight.Bold,
+        color = MaterialTheme.colors.primary
     )
 
     cryptoInfo?.let { crypto ->

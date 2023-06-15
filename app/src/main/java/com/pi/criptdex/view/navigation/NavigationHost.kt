@@ -8,7 +8,7 @@ import com.pi.criptdex.MainActivity
 import com.pi.criptdex.view.screens.AppScreen
 import com.pi.criptdex.view.screens.ForumScreen
 import com.pi.criptdex.view.screens.LibraryScreen
-import com.pi.criptdex.view.screens.InfoCryptoScreen
+import com.pi.criptdex.view.screens.CryptoInfoScreen
 import com.pi.criptdex.view.screens.login.LoginScreen
 import com.pi.criptdex.view.screens.login.LoginViewModel
 import com.pi.criptdex.view.navigation.Screens.*
@@ -39,10 +39,10 @@ fun AppNavigationHost(context: MainActivity, navController: NavHostController){
         composable(LibraryScreen.route){
             LibraryScreen(navController)
         }
-        composable(route = "${InfoCryptoScreen.route}/{id}") { backStackEntry ->
+        composable(route = "${CryptoInfoScreen.route}/{id}") { backStackEntry ->
             val id = backStackEntry.arguments?.getString("id")
             if (id != null) {
-                InfoCryptoScreen(navController = navController, id = id)
+                CryptoInfoScreen(navController = navController, id = id)
             }
         }
         composable(ForumScreen.route){

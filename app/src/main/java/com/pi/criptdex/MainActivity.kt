@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import com.pi.criptdex.view.navigation.NavigationHost
@@ -39,7 +40,7 @@ class MainActivity : ComponentActivity() {
 
                     // Launch a coroutine to wait for 3 seconds before hiding the load screen
                     val lifecycleOwner = LocalLifecycleOwner.current
-                    lifecycleOwner.lifecycleScope.launch {
+                    lifecycleOwner.lifecycleScope.launch{
                         delay(3000) // Wait for 3 seconds
                         showLoadScreen = false
                     }
@@ -64,7 +65,7 @@ fun LoadScreen() {
     ) {
         Image(
             painter = painterResource(R.drawable.logo1),
-            contentDescription = "carga"
+            contentDescription = stringResource(R.string.load_text)
         )
     }
 }

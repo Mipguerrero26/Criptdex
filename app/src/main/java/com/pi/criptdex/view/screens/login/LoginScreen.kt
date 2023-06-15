@@ -18,6 +18,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -27,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 import com.pi.criptdex.R
+import com.pi.criptdex.ui.theme.Vanem
 import com.pi.criptdex.view.navigation.Screens
 
 @Composable
@@ -57,7 +60,7 @@ fun Login(modifier: Modifier, viewModel: LoginViewModel, navController: NavContr
 
             if (viewModel.showLoginButton.value) {
                 HeaderImage(Modifier.align(Alignment.CenterHorizontally))
-                HeaderTitle(modifier = Modifier.align(Alignment.CenterHorizontally), title = "Inicio sesión")
+                HeaderTitle(modifier = Modifier.align(Alignment.CenterHorizontally), title = stringResource(R.string.login_title))
                 Spacer(modifier = Modifier.padding(4.dp))
                 EmailField(email) { viewModel.onLoginChanged(it, password) }
                 Spacer(modifier = Modifier.padding(4.dp))
@@ -67,10 +70,10 @@ fun Login(modifier: Modifier, viewModel: LoginViewModel, navController: NavContr
                 Spacer(modifier = Modifier.padding(16.dp))
                 LoginButton(email, password, loginEnable, navController)
                 Spacer(modifier = Modifier.padding(8.dp))
-                ChangeMode(modifier = Modifier.align(Alignment.CenterHorizontally), viewModel, modo = "Registrarse")
+                ChangeMode(modifier = Modifier.align(Alignment.CenterHorizontally), viewModel, modo = stringResource(R.string.singup_text))
             } else {
                 HeaderImage(Modifier.align(Alignment.CenterHorizontally))
-                HeaderTitle(modifier = Modifier.align(Alignment.CenterHorizontally), title = "Registro")
+                HeaderTitle(modifier = Modifier.align(Alignment.CenterHorizontally), title = stringResource(R.string.singup_title))
                 Spacer(modifier = Modifier.padding(4.dp))
                 EmailField(email) { viewModel.onLoginChanged(it, password) }
                 Spacer(modifier = Modifier.padding(4.dp))
@@ -78,7 +81,7 @@ fun Login(modifier: Modifier, viewModel: LoginViewModel, navController: NavContr
                 Spacer(modifier = Modifier.padding(16.dp))
                 SingUpButton(email, password, loginEnable, navController)
                 Spacer(modifier = Modifier.padding(8.dp))
-                ChangeMode(modifier = Modifier.align(Alignment.CenterHorizontally), viewModel, modo = "Volvel")
+                ChangeMode(modifier = Modifier.align(Alignment.CenterHorizontally), viewModel, modo = stringResource(R.string.return_text))
             }
         }
     }
@@ -98,6 +101,7 @@ fun ChangeMode(modifier: Modifier, viewModel: LoginViewModel, modo: String) {
 @Composable
 fun SingUpButton(email: String, password: String, loginEnable: Boolean, navController: NavController) {
     val context = LocalContext.current
+    val error = stringResource(R.string.singup_error)
 
     Button(
         onClick = {
@@ -108,7 +112,7 @@ fun SingUpButton(email: String, password: String, loginEnable: Boolean, navContr
                     if (it.isSuccessful) {
                         navController.navigate(route = Screens.AppScreen.route)
                     } else {
-                        Toast.makeText(context, "Error, no se ha podido registrar al usuario", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, error, Toast.LENGTH_LONG).show()
                     }
                 }
         },
@@ -122,13 +126,14 @@ fun SingUpButton(email: String, password: String, loginEnable: Boolean, navContr
         ),
         enabled = loginEnable
     ) {
-        Text(text = "Registrarse")
+        Text(text = stringResource(R.string.singup_text))
     }
 }
 
 @Composable
 fun LoginButton(email: String, password: String, loginEnable: Boolean, navController: NavController) {
     val context = LocalContext.current
+    val error = stringResource(R.string.login_error)
 
     Button(
         onClick = {
@@ -139,7 +144,7 @@ fun LoginButton(email: String, password: String, loginEnable: Boolean, navContro
                     if (it.isSuccessful) {
                         navController.navigate(route = Screens.AppScreen.route)
                     } else {
-                        Toast.makeText(context, "Error, no se ha podido autentificar al usuario", Toast.LENGTH_LONG).show()
+                        Toast.makeText(context, error, Toast.LENGTH_LONG).show()
                     }
                 }
         },
@@ -153,13 +158,13 @@ fun LoginButton(email: String, password: String, loginEnable: Boolean, navContro
         ),
         enabled = loginEnable
     ) {
-        Text(text = "Iniciar sesión")
+        Text(text = stringResource(R.string.login_text))
     }
 }
 
 @Composable
 fun ForgotPassword(modifier: Modifier) {
-    Text(text = "¿Olvidaste la contraseña?",
+    Text(text = stringResource(R.string.forgot_password),
         modifier = modifier.clickable {  },
         fontSize = 12.sp,
         fontWeight = FontWeight.Bold,
@@ -175,7 +180,7 @@ fun PasswordField(password: String, onTextFieldChanged: (String) -> Unit) {
         value = password,
         onValueChange = { onTextFieldChanged(it) },
         modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text(text = "Contraseña") },
+        placeholder = { Text(text = stringResource(R.string.password_text)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
         singleLine = true,
@@ -185,7 +190,7 @@ fun PasswordField(password: String, onTextFieldChanged: (String) -> Unit) {
                 val eyeIcon: Painter = painterResource(R.drawable.baseline_remove_red_eye_24)
                 Icon(
                     painter = eyeIcon,
-                    contentDescription = if (passwordVisibility) "Ocultar contraseña" else "Mostrar contraseña"
+                    contentDescription = if (passwordVisibility) stringResource(R.string.hide_password) else stringResource(R.string.show_password)
                 )
             }
         },
@@ -201,7 +206,7 @@ fun EmailField(email:String, onTextFieldChanged:(String) -> Unit) {
     TextField(
         value = email, onValueChange = { onTextFieldChanged(it) },
         modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text(text = "Email") },
+        placeholder = { Text(text = stringResource(R.string.email_text)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         singleLine = true,
         maxLines = 1,
@@ -216,7 +221,7 @@ fun EmailField(email:String, onTextFieldChanged:(String) -> Unit) {
 fun HeaderImage(modifier: Modifier) {
     Image(
         painter = painterResource(id = R.drawable.logo2),
-        contentDescription = "Header",
+        contentDescription = stringResource(R.string.login_text),
         modifier = modifier.size(250.dp)
     )
 }
@@ -226,6 +231,7 @@ fun HeaderTitle(modifier: Modifier, title: String) {
     Text(
         text = title,
         modifier,
+        fontFamily = Vanem,
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
         color = MaterialTheme.colors.primary
