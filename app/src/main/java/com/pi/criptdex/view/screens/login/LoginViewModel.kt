@@ -24,16 +24,20 @@ class LoginViewModel: ViewModel(){
     private val _showLoginButton = mutableStateOf(true)
     val showLoginButton: State<Boolean> = _showLoginButton
 
+    //Filtro permiso botón
     fun onLoginChanged(email: String, password: String) {
         _email.value = email
         _password.value = password
         _loginEnable.value = isValidEmail(email) && isValidPassword(password)
     }
 
+    //Filtro contraseña
     private fun isValidPassword(password: String): Boolean = password.length > 6
 
+    //Filtro correo
     private fun isValidEmail(email: String): Boolean = Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
+    //Filtro modo ventana
     fun toggleLoginButton() {
         _showLoginButton.value = !_showLoginButton.value
     }

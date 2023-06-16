@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -32,6 +31,7 @@ import com.pi.criptdex.R
 import com.pi.criptdex.ui.theme.Vanem
 import com.pi.criptdex.view.navigation.Screens
 
+//Ventana de autentificación
 @Composable
 fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
     Box(
@@ -43,9 +43,9 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
     }
 }
 
+//Estructura-cuerpo de la ventana de de autentificación
 @Composable
 fun Login(modifier: Modifier, viewModel: LoginViewModel, navController: NavController) {
-
     val email : String by viewModel.email.observeAsState(initial = "")
     val password : String by viewModel.password.observeAsState(initial = "")
     val loginEnable:Boolean by viewModel.loginEnable.observeAsState(initial = false)
@@ -57,40 +57,40 @@ fun Login(modifier: Modifier, viewModel: LoginViewModel, navController: NavContr
         }
     }else {
         Column(modifier = modifier) {
-
             if (viewModel.showLoginButton.value) {
                 HeaderImage(Modifier.align(Alignment.CenterHorizontally))
                 HeaderTitle(modifier = Modifier.align(Alignment.CenterHorizontally), title = stringResource(R.string.login_title))
-                Spacer(modifier = Modifier.padding(4.dp))
+                Spacer(Modifier.padding(4.dp))
                 EmailField(email) { viewModel.onLoginChanged(it, password) }
-                Spacer(modifier = Modifier.padding(4.dp))
+                Spacer(Modifier.padding(4.dp))
                 PasswordField(password) {viewModel.onLoginChanged(email, it)}
-                Spacer(modifier = Modifier.padding(8.dp))
+                Spacer(Modifier.padding(8.dp))
                 ForgotPassword(Modifier.align(Alignment.End))
-                Spacer(modifier = Modifier.padding(16.dp))
-                LoginButton(email, password, loginEnable, navController)
-                Spacer(modifier = Modifier.padding(8.dp))
-                ChangeMode(modifier = Modifier.align(Alignment.CenterHorizontally), viewModel, modo = stringResource(R.string.singup_text))
+                Spacer(Modifier.padding(16.dp))
+                LoginButton(email = email, password = password, loginEnable = loginEnable, navController = navController)
+                Spacer(Modifier.padding(8.dp))
+                ChangeMode(modifier = Modifier.align(Alignment.CenterHorizontally), viewModel = viewModel, mode = stringResource(R.string.singup_text))
             } else {
                 HeaderImage(Modifier.align(Alignment.CenterHorizontally))
                 HeaderTitle(modifier = Modifier.align(Alignment.CenterHorizontally), title = stringResource(R.string.singup_title))
-                Spacer(modifier = Modifier.padding(4.dp))
+                Spacer(Modifier.padding(4.dp))
                 EmailField(email) { viewModel.onLoginChanged(it, password) }
-                Spacer(modifier = Modifier.padding(4.dp))
+                Spacer(Modifier.padding(4.dp))
                 PasswordField(password) {viewModel.onLoginChanged(email, it)}
-                Spacer(modifier = Modifier.padding(16.dp))
-                SingUpButton(email, password, loginEnable, navController)
-                Spacer(modifier = Modifier.padding(8.dp))
-                ChangeMode(modifier = Modifier.align(Alignment.CenterHorizontally), viewModel, modo = stringResource(R.string.return_text))
+                Spacer(Modifier.padding(16.dp))
+                SingUpButton(email = email, password = password, loginEnable = loginEnable, navController = navController)
+                Spacer(Modifier.padding(8.dp))
+                ChangeMode(modifier = Modifier.align(Alignment.CenterHorizontally), viewModel = viewModel, mode = stringResource(R.string.return_text))
             }
         }
     }
 }
 
+//Texto clicable para cambiar de modo
 @Composable
-fun ChangeMode(modifier: Modifier, viewModel: LoginViewModel, modo: String) {
+fun ChangeMode(modifier: Modifier, viewModel: LoginViewModel, mode: String) {
     Text(
-        text = modo,
+        text = mode,
         modifier = modifier.clickable { viewModel.toggleLoginButton() },
         fontSize = 12.sp,
         fontWeight = FontWeight.Bold,
@@ -98,6 +98,7 @@ fun ChangeMode(modifier: Modifier, viewModel: LoginViewModel, modo: String) {
     )
 }
 
+//Botón de registro
 @Composable
 fun SingUpButton(email: String, password: String, loginEnable: Boolean, navController: NavController) {
     val context = LocalContext.current
@@ -126,10 +127,11 @@ fun SingUpButton(email: String, password: String, loginEnable: Boolean, navContr
         ),
         enabled = loginEnable
     ) {
-        Text(text = stringResource(R.string.singup_text))
+        Text(stringResource(R.string.singup_text))
     }
 }
 
+//Botón de inicio de sesión
 @Composable
 fun LoginButton(email: String, password: String, loginEnable: Boolean, navController: NavController) {
     val context = LocalContext.current
@@ -158,13 +160,15 @@ fun LoginButton(email: String, password: String, loginEnable: Boolean, navContro
         ),
         enabled = loginEnable
     ) {
-        Text(text = stringResource(R.string.login_text))
+        Text(stringResource(R.string.login_text))
     }
 }
 
+//Texto clicable olvidar contraseña
 @Composable
 fun ForgotPassword(modifier: Modifier) {
-    Text(text = stringResource(R.string.forgot_password),
+    Text(
+        text = stringResource(R.string.forgot_password),
         modifier = modifier.clickable {  },
         fontSize = 12.sp,
         fontWeight = FontWeight.Bold,
@@ -172,6 +176,7 @@ fun ForgotPassword(modifier: Modifier) {
     )
 }
 
+//Textfield para la comtraseña
 @Composable
 fun PasswordField(password: String, onTextFieldChanged: (String) -> Unit) {
     var passwordVisibility by remember { mutableStateOf(false) }
@@ -180,7 +185,7 @@ fun PasswordField(password: String, onTextFieldChanged: (String) -> Unit) {
         value = password,
         onValueChange = { onTextFieldChanged(it) },
         modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text(text = stringResource(R.string.password_text)) },
+        placeholder = { Text(stringResource(R.string.password_text)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
         singleLine = true,
@@ -201,12 +206,13 @@ fun PasswordField(password: String, onTextFieldChanged: (String) -> Unit) {
     )
 }
 
+//Textfield para el correo
 @Composable
 fun EmailField(email:String, onTextFieldChanged:(String) -> Unit) {
     TextField(
         value = email, onValueChange = { onTextFieldChanged(it) },
         modifier = Modifier.fillMaxWidth(),
-        placeholder = { Text(text = stringResource(R.string.email_text)) },
+        placeholder = { Text(stringResource(R.string.email_text)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         singleLine = true,
         maxLines = 1,
@@ -217,15 +223,7 @@ fun EmailField(email:String, onTextFieldChanged:(String) -> Unit) {
     )
 }
 
-@Composable
-fun HeaderImage(modifier: Modifier) {
-    Image(
-        painter = painterResource(id = R.drawable.logo2),
-        contentDescription = stringResource(R.string.login_text),
-        modifier = modifier.size(250.dp)
-    )
-}
-
+//Titulo
 @Composable
 fun HeaderTitle(modifier: Modifier, title: String) {
     Text(
@@ -235,5 +233,15 @@ fun HeaderTitle(modifier: Modifier, title: String) {
         fontSize = 24.sp,
         fontWeight = FontWeight.Bold,
         color = MaterialTheme.colors.primary
+    )
+}
+
+//Imagen logo
+@Composable
+fun HeaderImage(modifier: Modifier) {
+    Image(
+        painter = painterResource(R.drawable.logo2),
+        contentDescription = stringResource(R.string.login_text),
+        modifier = modifier.size(250.dp)
     )
 }

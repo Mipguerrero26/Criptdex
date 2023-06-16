@@ -14,6 +14,7 @@ import com.pi.criptdex.view.screens.login.LoginViewModel
 import com.pi.criptdex.view.navigation.Screens.*
 import com.pi.criptdex.view.screens.UserScreen
 
+//Controlador de navegación  de las ventanas principales
 @Composable
 fun NavigationHost(context: MainActivity, navController: NavHostController){
     NavHost(navController = navController,
@@ -29,6 +30,7 @@ fun NavigationHost(context: MainActivity, navController: NavHostController){
     }
 }
 
+//Controlador de navegación de las ventanas secundarias
 @Composable
 fun AppNavigationHost(context: MainActivity, navController: NavHostController){
     NavHost(

@@ -28,9 +28,9 @@ import com.google.firebase.auth.FirebaseAuth
 import com.pi.criptdex.MainActivity
 import com.pi.criptdex.R
 
+//Ventana del usuario
 @Composable
 fun UserScreen(context: MainActivity){
-
     val currentUser = FirebaseAuth.getInstance().currentUser
     val userEmail = currentUser?.email
 
@@ -40,6 +40,7 @@ fun UserScreen(context: MainActivity){
     }
 }
 
+//Información del usuario
 @Composable
 fun UserInfo(userEmail: String?) {
     Row(
@@ -54,6 +55,7 @@ fun UserInfo(userEmail: String?) {
                 .size(110.dp)
                 .padding(end = 8.dp)
         )
+
         Text(
             text = "$userEmail",
             fontWeight = FontWeight.Bold,
@@ -62,6 +64,7 @@ fun UserInfo(userEmail: String?) {
     }
 }
 
+//Botón de cierre de sesión
 @Composable
 fun SingOffButton(context: MainActivity) {
     val showDialog = remember { mutableStateOf(false) }
@@ -91,6 +94,7 @@ fun SingOffButton(context: MainActivity) {
     }
 }
 
+//Ventana de advertencia
 @Composable
 fun ConfirmationDialog(onConfirm: () -> Unit, onCancel: () -> Unit) {
     AlertDialog(

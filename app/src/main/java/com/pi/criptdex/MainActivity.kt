@@ -30,22 +30,20 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             CriptdexTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
                     val navController = rememberNavController()
                     var showLoadScreen by remember { mutableStateOf(true) }
-
-                    // Launch a coroutine to wait for 3 seconds before hiding the load screen
                     val lifecycleOwner = LocalLifecycleOwner.current
+
+                    //Teporizador de 3 segundos
                     lifecycleOwner.lifecycleScope.launch{
-                        delay(3000) // Wait for 3 seconds
+                        delay(3000)
                         showLoadScreen = false
                     }
 
-                    // Show the load screen or the navigation host based on the value of showLoadScreen
                     if (showLoadScreen) {
                         LoadScreen()
                     } else {
@@ -57,6 +55,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+//Pantalla de carga con el logo en el centro
 @Composable
 fun LoadScreen() {
     Box(

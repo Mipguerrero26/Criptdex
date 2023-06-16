@@ -55,6 +55,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+//Ventana de información de la cryptomoneda
 @Composable
 fun CryptoInfoScreen(navController: NavHostController, id: String) {
 
@@ -64,7 +65,6 @@ fun CryptoInfoScreen(navController: NavHostController, id: String) {
         .build()
 
     val apiService = retrofit.create(ApiService::class.java)
-
     var cryptoInfo: CryptoApi? by remember { mutableStateOf(null) }
     var prices: PricesApi? by remember { mutableStateOf(null) }
 
@@ -88,7 +88,10 @@ fun CryptoInfoScreen(navController: NavHostController, id: String) {
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = stringResource(R.string.cryptoInfo_title), fontFamily = Vanem)
+                    Text(
+                        text = stringResource(R.string.cryptoInfo_title),
+                        fontFamily = Vanem
+                    )
                 },
                 navigationIcon = {
                     Icon(
@@ -103,23 +106,23 @@ fun CryptoInfoScreen(navController: NavHostController, id: String) {
         }
     ) {
         Column(
-            modifier = Modifier
+            Modifier
                 .padding(it)
                 .padding(16.dp)
                 .fillMaxSize()
         ) {
             CryptoInfoHeader(cryptoInfo)
-            Spacer(modifier = Modifier.height(16.dp))
-            GraphCrypto(prices)
-            Spacer(modifier = Modifier.height(16.dp))
-            PriceCrypto(cryptoInfo)
-            Spacer(modifier = Modifier.height(16.dp))
-            DescriptionCryptoBody(cryptoInfo)
+            Spacer(Modifier.height(16.dp))
+            CryptoGraph(prices)
+            Spacer(Modifier.height(16.dp))
+            CryptoPrice(cryptoInfo)
+            Spacer(Modifier.height(16.dp))
+            CryptoDescriptionItem(cryptoInfo)
         }
     }
-
 }
 
+//Identificador cryptomoneda
 @Composable
 fun CryptoInfoHeader(cryptoInfo: CryptoApi?) {
     Row(
@@ -136,7 +139,7 @@ fun CryptoInfoHeader(cryptoInfo: CryptoApi?) {
                     .size(90.dp)
                     .clip(CircleShape)
                     .width(16.dp)
-                    .background(color = Color.White)
+                    .background(Color.White)
             )
 
             CryptoInfo(
@@ -150,15 +153,17 @@ fun CryptoInfoHeader(cryptoInfo: CryptoApi?) {
     }
 }
 
+//Gráfica de la fluctuación de la cryptomoneda
 @Composable
-fun GraphCrypto(prices: PricesApi?) {
+fun CryptoGraph(prices: PricesApi?) {
     prices?.prices?.let { priceList ->
         GraphView(priceList, Modifier.fillMaxWidth().height(100.dp))
     }
 }
 
+//Precio de la cryptomoneda
 @Composable
-fun PriceCrypto(cryptoInfo: CryptoApi?) {
+fun CryptoPrice(cryptoInfo: CryptoApi?) {
     cryptoInfo?.let { crypto ->
         Text(
             text = "${crypto.market_data.current_price.eur} (EUR)",
@@ -169,8 +174,9 @@ fun PriceCrypto(cryptoInfo: CryptoApi?) {
     }
 }
 
+//Cuerpo de la descripción de la cryptomoneda
 @Composable
-fun DescriptionCryptoBody(cryptoInfo: CryptoApi?) {
+fun CryptoDescriptionItem(cryptoInfo: CryptoApi?) {
     Text(
         text = stringResource(R.string.description_text),
         fontFamily = Vanem,
@@ -179,12 +185,13 @@ fun DescriptionCryptoBody(cryptoInfo: CryptoApi?) {
     )
 
     cryptoInfo?.let { crypto ->
-        DescriptionCrypto(crypto.description.en)
+        CryptoDescription(crypto.description.en)
     }
 }
 
+//Descripción de la cryptomoneda
 @Composable
-fun DescriptionCrypto(description: String) {
+fun CryptoDescription(description: String) {
     LazyColumn (
         modifier = Modifier.padding(top = 3.dp)
     ){
@@ -197,6 +204,7 @@ fun DescriptionCrypto(description: String) {
     }
 }
 
+//Gráfica
 @Composable
 fun GraphView(prices: List<List<Double>>, modifier: Modifier = Modifier) {
     val minValue = prices.minOf { it[1] }
@@ -205,15 +213,16 @@ fun GraphView(prices: List<List<Double>>, modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         Canvas(modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp)) {
+            .height(100.dp)
+        ) {
             val canvasWidth = size.width
             val canvasHeight = size.height
-
             val path = Path()
             val paint = Paint()
+
             paint.color = Teal500
             paint.strokeWidth = 5f
-            paint.strokeCap = StrokeCap.Round // Establecer los extremos de línea redondeados
+            paint.strokeCap = StrokeCap.Round
 
             val xStep = canvasWidth / (prices.size - 1).toFloat()
             val yStep = canvasHeight / (maxValue - minValue).toFloat()

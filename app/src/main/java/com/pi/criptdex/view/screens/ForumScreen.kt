@@ -44,6 +44,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+//Ventana del foro
 @Composable
 fun ForumScreen() {
     val messageText = remember { mutableStateOf("") }
@@ -51,34 +52,29 @@ fun ForumScreen() {
     val userEmail = currentUser?.email
 
     Column(modifier = Modifier.fillMaxSize()) {
-        //ForumMessage(modifier = Modifier.weight(1f))
-
         val retrofit = Retrofit.Builder()
             .baseUrl("https://criptdex-6ebcc-default-rtdb.europe-west1.firebasedatabase.app/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         val apiService = retrofit.create(ApiService::class.java)
-
         val messagesState = remember { mutableStateOf<List<Message>>(emptyList()) }
 
         LaunchedEffect(Unit) {
-            // Lanzar un bucle infinito para realizar la consulta cada segundo
             while (true) {
                 try {
                     val messages = apiService.getMessages()
+
                     messagesState.value = messages.values.toList()
                 } catch (e: Exception) {
-                    // Manejar errores de conexión o respuesta incorrecta aquí
+                    println(e)
                 }
-
-                // Pausar durante un segundo antes de realizar la siguiente consulta
                 delay(1000)
             }
         }
 
         if (userEmail != null) {
-            MessageList(messages = messagesState.value, userEmail = userEmail, Modifier.weight(1f))
+            MessageList(messages = messagesState.value, userEmail = userEmail, modifier = Modifier.weight(1f))
         }
 
         MessageInput(
@@ -93,6 +89,7 @@ fun ForumScreen() {
     }
 }
 
+//Lista de los mensajes
 @Composable
 fun MessageList(messages: List<Message>, userEmail: String, modifier: Modifier) {
     val sortedMessages = messages.sortedByDescending { it.date }
@@ -107,6 +104,7 @@ fun MessageList(messages: List<Message>, userEmail: String, modifier: Modifier) 
     }
 }
 
+//Mensaje
 @Composable
 fun MessageItem(message: Message, userEmail: String) {
     val alignment = if (userEmail == message.userName) Alignment.End else Alignment.Start
@@ -119,17 +117,17 @@ fun MessageItem(message: Message, userEmail: String) {
             .wrapContentWidth(align = alignment)
             .widthIn(max = maxWidth)
     ) {
-        Card(modifier = Modifier.fillMaxWidth()) {
+        Card(Modifier.fillMaxWidth()) {
             Column {
-                MessageHeader(userName = message.userName)
-                Text(text = message.messageText)
-                MessageDate(date = message.date)
-                // Otros elementos de UI para mostrar el mensaje
+                MessageHeader(message.userName)
+                Text(message.messageText)
+                MessageDate(message.date)
             }
         }
     }
 }
 
+//Encabezado del mensaje (usuario)
 @Composable
 fun MessageHeader(userName: String) {
     Text(
@@ -139,6 +137,7 @@ fun MessageHeader(userName: String) {
     )
 }
 
+//Fecha del mensaje
 @Composable
 fun MessageDate(date: Long) {
     val formattedDate = SimpleDateFormat("dd/MM/yyyy-HH:mm", Locale.getDefault()).format(Date(date))
@@ -151,6 +150,7 @@ fun MessageDate(date: Long) {
     )
 }
 
+//Textfield mensaje
 @Composable
 fun MessageInput(messageText: String, onMessageTextChanged: (String) -> Unit, onSendMessage: () -> Unit
 ) {
@@ -179,11 +179,12 @@ fun MessageInput(messageText: String, onMessageTextChanged: (String) -> Unit, on
     }
 }
 
+//Subir el mensaje a la base de datos
 fun sendMessage(message: Message) {
     val database = FirebaseDatabase.getInstance("https://criptdex-6ebcc-default-rtdb.europe-west1.firebasedatabase.app/")
     val ref = database.getReference("forum")
-
     val messageRef = ref.push()
+
     messageRef.child("date").setValue(message.date)
     messageRef.child("messageText").setValue(message.messageText)
     messageRef.child("userName").setValue(message.userName)

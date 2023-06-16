@@ -57,6 +57,7 @@ import com.pi.criptdex.R
 import com.pi.criptdex.ui.theme.Vanem
 import com.pi.criptdex.view.navigation.Screens
 
+//Ventana de la biblioteca
 @Composable
 fun LibraryScreen(navController: NavHostController) {
     val fireStore = FireStore()
@@ -66,7 +67,7 @@ fun LibraryScreen(navController: NavHostController) {
     var isDescendingOrder by remember { mutableStateOf(true) }
 
     LaunchedEffect(Unit) {
-        val obtainedCryptos = fireStore.obtenerCryptos()
+        val obtainedCryptos = fireStore.getCryptos()
         cryptoList = obtainedCryptos
     }
 
@@ -95,10 +96,12 @@ fun LibraryScreen(navController: NavHostController) {
                             tint = MaterialTheme.colors.onSurface
                         )
                     }
+
                     IconButton(
                         onClick = { isDescendingOrder = !isDescendingOrder }
                     ) {
                         val iconPainter = painterResource(R.drawable.baseline_filter_list_24)
+
                         Image(
                             painter = iconPainter,
                             contentDescription = stringResource(R.string.filter_text),
@@ -112,18 +115,18 @@ fun LibraryScreen(navController: NavHostController) {
             )
         }
     ) {
-
         Column(modifier = Modifier
             .padding(it)
             .padding(8.dp)
         ) {
             val sortedCryptoList = if (isDescendingOrder) cryptoList.sortedBy { it.name } else cryptoList.sortedByDescending { it.name }
-            CryptoList(sortedCryptoList, searchQuery, navController)
+
+            CryptoList(cryptoList = sortedCryptoList, searchQuery = searchQuery, navController = navController)
         }
     }
-
 }
 
+//Buscador cryptomonedas
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CryptoSearch(
@@ -156,7 +159,7 @@ fun CryptoSearch(
         textStyle = TextStyle(fontSize = 16.sp),
         leadingIcon = {
             IconButton(onClick = {
-                onSearchQueryChange("") // Limpiar el texto cuando se hace clic en "Atrás"
+                onSearchQueryChange("")
                 onCancelSearch()
             }) {
                 Icon(
@@ -168,23 +171,23 @@ fun CryptoSearch(
     )
 }
 
+//Lista cryptomonedas
 @Composable
 fun CryptoList(
     cryptoList: List<Crypto>,
     searchQuery: String,
     navController: NavHostController
 ) {
-    val filteredCryptoList = cryptoList.filter { crypto ->
-        crypto.name.contains(searchQuery, ignoreCase = true)
-    }
+    val filteredCryptoList = cryptoList.filter { crypto -> crypto.name.contains(searchQuery, ignoreCase = true)}
 
-    LazyColumn() {
+    LazyColumn {
         items(filteredCryptoList) { crypto ->
-            CryptoCard(crypto.image, crypto.name, crypto.symbol, crypto.id, navController)
+            CryptoCard(image = crypto.image, name = crypto.name, symbol = crypto.symbol, id = crypto.id, navController = navController)
         }
     }
 }
 
+//Trajeta-ficha ccryptomoneda
 @Composable
 fun CryptoCard(image: String, name: String, symbol: String, id: String, navController: NavHostController) {
     Card(
@@ -201,10 +204,11 @@ fun CryptoCard(image: String, name: String, symbol: String, id: String, navContr
                 navController.navigate(route = "${Screens.CryptoInfoScreen.route}/$id")
             }
         ) {
-            CryptoImage(image, modifier = Modifier
+            CryptoImage(image = image, modifier = Modifier
                 .size(64.dp)
                 .clip(CircleShape)
                 .background(color = Color.White))
+
             CryptoInfo(
                 name = name,
                 symbol = symbol,
@@ -216,6 +220,7 @@ fun CryptoCard(image: String, name: String, symbol: String, id: String, navContr
     }
 }
 
+//Imagen cryptomoneda
 @Composable
 fun CryptoImage(image: String, modifier: Modifier) {
     Box(
@@ -230,11 +235,11 @@ fun CryptoImage(image: String, modifier: Modifier) {
     }
 }
 
+//Información sobre que cryptomoneda es
 @Composable
 fun CryptoInfo(name: String, symbol: String, modifier: Modifier) {
     Column(
         modifier
-
     ) {
         Text(
             text = name,
@@ -242,6 +247,7 @@ fun CryptoInfo(name: String, symbol: String, modifier: Modifier) {
             fontWeight = FontWeight.Bold,
             color = MaterialTheme.colors.primary
         )
-        Text(text = symbol)
+
+        Text(symbol)
     }
 }

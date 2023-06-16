@@ -17,11 +17,11 @@ import com.pi.criptdex.view.navigation.Screens.*
 import com.pi.criptdex.view.navigation.AppNavigationHost
 import com.pi.criptdex.view.navigation.Screens
 
+//Ventana de la app
 @Composable
 fun AppScreen(context: MainActivity) {
     val navController = rememberNavController()
     val scaffoldState = rememberScaffoldState()
-
     val navigation_item = listOf(
         LibraryScreen,
         ForumScreen,
@@ -30,29 +30,33 @@ fun AppScreen(context: MainActivity) {
 
     Scaffold (
         scaffoldState = scaffoldState,
-        bottomBar = { NavegacionInferior(navController, navigation_item) }
+        bottomBar = { BottomNavigation(navController, navigation_item) }
     ){
-        Box(modifier = Modifier.padding(it)) {
-            AppNavigationHost(context, navController)
+        Box(Modifier.padding(it)) {
+            AppNavigationHost(context = context, navController = navController)
         }
 
     }
 }
 
+//Cambio de ventana
 @Composable
 fun currentRoute(navController: NavHostController): String? {
-    val entrada by navController.currentBackStackEntryAsState()
-    return entrada?.destination?.route
+    val input by navController.currentBackStackEntryAsState()
+
+    return input?.destination?.route
 }
 
+//Barra inferior para moverse entre ventanas
 @Composable
-fun NavegacionInferior(
+fun BottomNavigation(
     navController: NavHostController,
     menu_items : List<Screens>
 ) {
-    BottomAppBar() {
-        BottomNavigation() {
+    BottomAppBar {
+        BottomNavigation {
             val currentRoute = currentRoute(navController = navController)
+
             menu_items.forEach { item ->
                 BottomNavigationItem(
                     selected = currentRoute == item.route,

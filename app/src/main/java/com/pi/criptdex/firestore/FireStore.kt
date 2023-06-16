@@ -8,10 +8,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
+//Recoge las cryptos de la base de datos y las guarda en una lista
 class FireStore {
     private val db = FirebaseFirestore.getInstance()
 
-    suspend fun obtenerCryptos(): List<Crypto> = withContext(Dispatchers.IO) {
+    suspend fun getCryptos(): List<Crypto> = withContext(Dispatchers.IO) {
         val cryptoList = mutableStateListOf<Crypto>()
 
         try {
@@ -23,10 +24,9 @@ class FireStore {
                     val image = document.getString("image") ?: ""
                     val cryptos = Crypto(id, symbol, name, image)
                     cryptoList.add(cryptos)
-                    System.out.println("bien")
                 }
         }catch (e: FirebaseFirestoreException) {
-            System.out.println( "mal")
+            println(e)
         }
 
         cryptoList
