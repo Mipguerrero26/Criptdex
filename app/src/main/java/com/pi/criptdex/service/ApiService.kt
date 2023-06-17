@@ -14,7 +14,7 @@ interface ApiService {
         @Path("cryptoId") cryptoId: String
     ): CryptoApi
 
-    //información fluctuación criptomoneda a lo largo de 31 días (coingecko)
+    //información fluctuación criptomoneda a lo largo de 30 días (coingecko)
     @GET("coins/{cryptoId}/market_chart")
     suspend fun getPrices(
         @Path("cryptoId") cryptoId: String,
