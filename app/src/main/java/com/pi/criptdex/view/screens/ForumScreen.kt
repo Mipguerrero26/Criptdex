@@ -181,11 +181,13 @@ fun MessageInput(messageText: String, onMessageTextChanged: (String) -> Unit, on
 
 //Subir el mensaje a la base de datos
 fun sendMessage(message: Message) {
-    val database = FirebaseDatabase.getInstance("https://criptdex-6ebcc-default-rtdb.europe-west1.firebasedatabase.app/")
-    val ref = database.getReference("forum")
-    val messageRef = ref.push()
+    if (message.messageText.isNotEmpty()) {
+        val database = FirebaseDatabase.getInstance("https://criptdex-6ebcc-default-rtdb.europe-west1.firebasedatabase.app/")
+        val ref = database.getReference("forum")
+        val messageRef = ref.push()
 
-    messageRef.child("date").setValue(message.date)
-    messageRef.child("messageText").setValue(message.messageText)
-    messageRef.child("userName").setValue(message.userName)
+        messageRef.child("date").setValue(message.date)
+        messageRef.child("messageText").setValue(message.messageText)
+        messageRef.child("userName").setValue(message.userName)
+    }
 }
