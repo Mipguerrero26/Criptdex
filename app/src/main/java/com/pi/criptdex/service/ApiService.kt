@@ -19,7 +19,7 @@ interface ApiService {
     suspend fun getPrices(
         @Path("cryptoId") cryptoId: String,
         @Query("vs_currency") currency: String = "eur",
-        @Query("days") days: Int = 31,
+        @Query("days") days: Int = 30,
         @Query("interval") interval: String = "daily"
     ): PricesApi
 
